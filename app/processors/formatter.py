@@ -1,36 +1,55 @@
 import pandas as pd
-from app.processors.hasher import generate_hash
-from app.processors.chunker import semantic_chunk
 
 
-def format_data(data, source_type):
-    records = []
-    item = data[0]
+def format_data(data, source):
+    """
+    Normalize extracted data from different sources (URL, PDF, Image)
+    into a single structured DataFrame.
 
-    sections = []
+    This function is cloud-safe and type-safe.
+    """
 
-    if "title" in item:
-        sections.append(("Title", item["title"]))
+    rows = []
 
-    for h in item.get("headings", []):
-        sections.append(("Heading", h))
+    # Case 1: data is list (PDF pages, OCR text, etc.)
+    if isinstance(data, list):
+        for idx, item in enumerate(data):
+            if isinstance(item, dict):
+                content = item.get("content", "")
+                section = item.get("section", f"Page {idx+1}")
+            else:
+                # item is string
+                content = str(item)
+                section = f"Page {idx+1}"
 
-    for p in item.get("paragraphs", []):
-        sections.append(("Paragraph", p))
+            if content.strip():
+                rows.append({
+                    "source_type": source,
+                    "section": section,
+                    "chunk_id": idx + 1,
+                    "content": content.strip()
+                })
 
-    chunk_id = 1
+    # Case 2: data is dict (HTML structured extraction)
+    elif isinstance(data, dict):
+        content = data.get("content", "")
+        section = data.get("section", "Content")
 
-    for section, content in sections:
-        chunks = semantic_chunk(content)
-
-        for chunk in chunks:
-            records.append({
-                "chunk_id": chunk_id,
+        if content.strip():
+            rows.append({
+                "source_type": source,
                 "section": section,
-                "content": chunk,
-                "source_type": source_type,
-                "content_hash": generate_hash(chunk)
+                "chunk_id": 1,
+                "content": content.strip()
             })
-            chunk_id += 1
 
-    return pd.DataFrame(records)
+    # Case 3: fallback (string or unknown)
+    else:
+        rows.append({
+            "source_type": source,
+            "section": "Content",
+            "chunk_id": 1,
+            "content": str(data)
+        })
+
+    return pd.DataFrame(rows)
