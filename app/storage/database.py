@@ -1,44 +1,24 @@
 import sqlite3
-from app.config import DB_PATH, TABLE_NAME
-from app.logger import logger
+import os
 
-
-def initialize_db(cursor):
-    cursor.execute(f"""
-        CREATE TABLE IF NOT EXISTS {TABLE_NAME} (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            chunk_id INTEGER,
-            section TEXT,
-            content TEXT,
-            content_hash TEXT UNIQUE,
-            source_type TEXT
-        )
-    """)
-
+DB_PATH = "data/ingestion.db"
 
 
 def save(df):
+    """
+    Save extracted structured data into SQLite.
+    Cloud-safe, schema-flexible.
+    """
+    os.makedirs("data", exist_ok=True)
+
     conn = sqlite3.connect(DB_PATH)
-    cursor = conn.cursor()
-    initialize_db(cursor)
 
-    for _, row in df.iterrows():
-        try:
-            cursor.execute(
-                f"""
-                INSERT INTO {TABLE_NAME}
-                (section, content, content_hash, source_type)
-                VALUES (?, ?, ?, ?)
-                """,
-                (
-                    row["section"],
-                    row["content"],
-                    row["content_hash"],
-                    row["source_type"]
-                )
-            )
-        except sqlite3.IntegrityError:
-            logger.info("Duplicate skipped")
+    # Let pandas handle schema automatically
+    df.to_sql(
+        "ingested_data",
+        conn,
+        if_exists="append",
+        index=False
+    )
 
-    conn.commit()
     conn.close()
