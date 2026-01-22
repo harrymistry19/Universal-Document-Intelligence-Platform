@@ -1,0 +1,13 @@
+2026-01-22 16:56:26,191 | INFO | Pipeline started for input: data/raw/HARRY JOINING LETTER.pdf
+2026-01-22 16:56:26,192 | INFO | Detected source: PDF
+2026-01-22 16:56:30,883 | INFO | Duplicate skipped
+2026-01-22 16:56:30,884 | INFO | Duplicate skipped
+2026-01-22 16:56:30,884 | INFO | Duplicate skipped
+2026-01-22 16:56:30,885 | INFO | Duplicate skipped
+2026-01-22 16:56:30,885 | INFO | Duplicate skipped
+2026-01-22 16:56:30,885 | INFO | Duplicate skipped
+2026-01-22 16:56:30,886 | INFO | Duplicate skipped
+2026-01-22 16:56:30,886 | INFO | Duplicate skipped
+2026-01-22 16:56:30,887 | INFO | Duplicate skipped
+2026-01-22 16:56:30,887 | INFO | Duplicate skipped
+2026-01-22 16:56:30,893 | INFO | Pipeline completed successfully
