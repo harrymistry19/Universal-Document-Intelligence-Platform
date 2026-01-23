@@ -8,6 +8,21 @@ and semantic search — designed with scalability and industry practices in mind
 
 ---
 
+## 🛠 Tech Stack
+
+streamlit
+pandas
+numpy
+requests
+beautifulsoup4
+pytesseract
+Pillow
+pdfplumber
+sentence-transformers
+scikit-learn
+torch
+
+
 ## 🚀 Features
 
 - 🌍 Web scraping (static websites)
@@ -25,16 +40,6 @@ and semantic search — designed with scalability and industry practices in mind
 
 ---
 
-## 🛠 Tech Stack
-
-- Python 3.13
-- Streamlit
-- Pandas
-- SQLite
-- BeautifulSoup
-- Tesseract OCR
-- SentenceTransformers
-- Scikit-learn
 
 ---
 

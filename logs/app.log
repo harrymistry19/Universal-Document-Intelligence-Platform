@@ -11,3 +11,6 @@
 2026-01-22 16:56:30,887 | INFO | Duplicate skipped
 2026-01-22 16:56:30,887 | INFO | Duplicate skipped
 2026-01-22 16:56:30,893 | INFO | Pipeline completed successfully
+2026-01-23 09:48:47,913 | INFO | Pipeline started for input: data/raw/HARRY JOINING LETTER.pdf
+2026-01-23 09:48:47,915 | INFO | Detected source: PDF
+2026-01-23 09:48:52,705 | INFO | Pipeline completed successfully
